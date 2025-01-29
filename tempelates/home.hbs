@@ -908,14 +908,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 // Add this to your JavaScript file
 // LLM API Configuration
-const LLM_BASE_URL = 'http://172.16.18.208:1234';
+const BACKEND_PROXY_URL = 'http://15.235.198.46:3000/proxy';
 const API_ENDPOINTS = {
     MODELS: '/v1/models',
     CHAT: '/v1/chat/completions',
     COMPLETIONS: '/v1/completions'
 };
 
-// Initialize the chat interface
 document.addEventListener('DOMContentLoaded', async function() {
     const chatWindow = document.querySelector('.ai-companion-container');
     const toggleButton = document.getElementById('toggleChat');
@@ -924,113 +923,90 @@ document.addEventListener('DOMContentLoaded', async function() {
     const sendButton = document.getElementById('sendMessage');
     let currentModel = null;
     
-    // Add conversation history array to store all messages
     let conversationHistory = [{
         role: "system",
         content: "You are a supportive mental wellness companion on a social-dating platform. Focus on providing emotional support, relationship advice, and promoting healthy dating practices. Do not try to cut somebody off and listen to everything they say while staying ethical."
     }];
 
-    // Fetch available models on startup
     async function initializeModels() {
         try {
-            const response = await fetch(`${LLM_BASE_URL}${API_ENDPOINTS.MODELS}`);
+            const response = await fetch(`${BACKEND_PROXY_URL}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    endpoint: API_ENDPOINTS.MODELS
+                })
+            });
             const data = await response.json();
             currentModel = data.data[0]?.id || null;
             console.log('Using model:', currentModel);
             
-            // Add initial welcome message and store it in history
             const welcomeMessage = "Hi! I'm your mental wellness companion. How are you feeling today?";
             addMessage(welcomeMessage, 'ai');
-            conversationHistory.push({
-                role: "assistant",
-                content: welcomeMessage
-            });
+            conversationHistory.push({ role: "assistant", content: welcomeMessage });
         } catch (error) {
             console.error('Error initializing models:', error);
             addMessage("I'm having trouble connecting to the service. Please try again later.", 'ai');
         }
     }
 
-    // Initialize models
     await initializeModels();
 
-    // Send message to LLM
     async function sendMessage() {
         const message = userInput.value.trim();
         if (!message || !currentModel) return;
 
-        // Add user message to chat and history
         addMessage(message, 'user');
-        conversationHistory.push({
-            role: "user",
-            content: message
-        });
+        conversationHistory.push({ role: "user", content: message });
         userInput.value = '';
 
         try {
-            const response = await fetch(`${LLM_BASE_URL}${API_ENDPOINTS.CHAT}`, {
+            const response = await fetch(`${BACKEND_PROXY_URL}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    model: currentModel,
-                    messages: conversationHistory,  // Send the entire conversation history
-                    temperature: 0.7,
-                    max_tokens: 150
+                    endpoint: API_ENDPOINTS.CHAT,
+                    data: {
+                        model: currentModel,
+                        messages: conversationHistory,
+                        temperature: 0.7,
+                        max_tokens: 150
+                    }
                 })
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
             const aiResponse = data.choices[0]?.message?.content || 'I apologize, but I need a moment to think about that.';
             
-            // Add AI response to chat and history
             addMessage(aiResponse, 'ai');
-            conversationHistory.push({
-                role: "assistant",
-                content: aiResponse
-            });
-
+            conversationHistory.push({ role: "assistant", content: aiResponse });
         } catch (error) {
             console.error('Error:', error);
-            // Fallback to completions endpoint if chat fails
             try {
-                // Create a prompt that includes recent context
-                const recentMessages = conversationHistory.slice(-3).map(msg => 
-                    `${msg.role}: ${msg.content}`
-                ).join('\n');
-                
-                const completionResponse = await fetch(`${LLM_BASE_URL}${API_ENDPOINTS.COMPLETIONS}`, {
+                const recentMessages = conversationHistory.slice(-3).map(msg => `${msg.role}: ${msg.content}`).join('\n');
+                const completionResponse = await fetch(`${BACKEND_PROXY_URL}`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        model: currentModel,
-                        prompt: `Previous conversation:\n${recentMessages}\nRespond as a mental wellness companion:`,
-                        temperature: 0.7,
-                        max_tokens: 150
+                        endpoint: API_ENDPOINTS.COMPLETIONS,
+                        data: {
+                            model: currentModel,
+                            prompt: `Previous conversation:\n${recentMessages}\nRespond as a mental wellness companion:`,
+                            temperature: 0.7,
+                            max_tokens: 150
+                        }
                     })
                 });
 
-                if (!completionResponse.ok) {
-                    throw new Error(`HTTP error! status: ${completionResponse.status}`);
-                }
-
+                if (!completionResponse.ok) throw new Error(`HTTP error! status: ${completionResponse.status}`);
                 const completionData = await completionResponse.json();
                 const completionText = completionData.choices[0]?.text || 'I apologize, but I need a moment to think about that.';
                 
-                // Add completion response to chat and history
                 addMessage(completionText, 'ai');
-                conversationHistory.push({
-                    role: "assistant",
-                    content: completionText
-                });
-
+                conversationHistory.push({ role: "assistant", content: completionText });
             } catch (completionError) {
                 console.error('Completion Error:', completionError);
                 addMessage('I apologize, but I seem to be having trouble connecting. Please try again.', 'ai');
@@ -1038,7 +1014,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 
-    // Add message to chat interface
     function addMessage(text, sender) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${sender}-message`;
@@ -1047,19 +1022,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         messageContainer.scrollTop = messageContainer.scrollHeight;
     }
 
-    // Toggle chat window
     toggleButton.addEventListener('click', () => {
         chatWindow.classList.toggle('minimized');
         toggleButton.textContent = chatWindow.classList.contains('minimized') ? '+' : '−';
     });
 
-    // Event listeners
     sendButton.addEventListener('click', sendMessage);
     userInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') sendMessage();
     });
 
-    // Error handling for network issues
     window.addEventListener('offline', () => {
         addMessage('Network connection lost. Please check your internet connection.', 'ai');
     });
