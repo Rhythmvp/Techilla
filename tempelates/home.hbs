@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindful Matches -The Ai Dating Site</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lato', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #fafafa;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #6c5ce7;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            margin-top: 80px;
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .user-name {
+            color: #6c5ce7;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Search Box */
+        .search-box {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .match {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .search-box input {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .search-box button {
+            background-color: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-box button:hover {
+            background-color: #5f51e8;
+        }
+
+        /* Services Grid */
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        #head {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #6c5ce7;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+     
+/* Add this to your CSS */
+.ai-companion-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 350px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.ai-chat-window {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+}
+
+.ai-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: #6c5ce7;
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.ai-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.minimize-btn {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin: 5px 0;
+}
+
+.ai-message {
+    background: #f0eeff;
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+}
+
+.user-message {
+    background: #6c5ce7;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+.chat-input-area {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+}
+
+#userInput {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+}
+
+#sendMessage {
+    background: #6c5ce7;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#sendMessage:hover {
+    background: #5b4ee2;
+}
+
+.minimized {
+    transform: translateY(calc(100% - 60px));
+}
+
+/* Affirmation Container Styling */
+.affirmation-container {
+    position: fixed;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 320px;
+    pointer-events: none;
+    z-index: 1000;
+    perspective: 1000px;
+}
+
+.mood-selector {
+    position: fixed;
+    left: 30px;
+    bottom: 30px;
+    background: var(--background);
+    padding: 15px 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px var(--shadow);
+    pointer-events: auto;
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mood-selector:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px var(--shadow);
+}
+
+.mood-selector label {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: -0.02em;
+}
+
+.mood-selector select {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--primary-light);
+    border-radius: 12px;
+    background: var(--background);
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 500;
+    outline: none;
+    width: 180px;
+    cursor: pointer;
+}
+
+.mood-selector select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(127, 90, 240, 0.2);
+}
+
+.affirmation-card {
+    position: absolute;
+    left: 30px;
+    background: var(--background);
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px var(--shadow);
+    border: 2px solid rgba(127, 90, 240, 0.1);
+    width: 280px;
+    text-align: center;
+    animation: floatUp 25s ease-out forwards;
+    pointer-events: none;
+    backdrop-filter: blur(10px);
+    transform-style: preserve-3d;
+}
+
+.affirmation-card p {
+    margin: 0;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+}
+
+/* Enhanced Mental Health Test Styling */
+.mhc-test {
+    width: 450px;
+    margin: 40px 0 40px 400px;
+    padding: 30px;
+    background: var(--background);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px var(--shadow);
+    border: 2px solid rgba(127, 90, 240, 0.1);
+}
+
+.mhc-questions {
+    margin: 25px 0;
+    padding: 20px;
+    background: var(--surface);
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+    position: relative;
+    overflow: hidden;
+}
+
+.mhc-questions::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: var(--gradient);
+    border-radius: 4px;
+}
+
+.mhc-answers {
+    margin: 15px 0 15px 25px;
+}
+
+.mhc-answers input[type="radio"] {
+    margin: 10px;
+    accent-color: var(--primary);
+    transform: scale(1.1);
+}
+
+.mhc-answers input[type="radio"]:hover {
+    transform: scale(1.2);
+}
+
+.button {
+    display: inline-block;
+    width: auto;
+    min-width: 200px;
+    margin: 25px 0;
+    padding: 14px 28px;
+    background: var(--gradient);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transform: translateY(0);
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+.result-container {
+    margin-top: 30px;
+    padding: 25px;
+    border-radius: 16px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Enhanced Result States */
+.result-mild {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border: none;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.15);
+}
+
+.result-moderate {
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.15);
+}
+
+.result-severe {
+    background: linear-gradient(135deg, #ffebee, #ffcdd2);
+    border: none;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.15);
+}
+
+/* Animations */
+@keyframes floatUp {
+    0% {
+        bottom: -100px;
+        opacity: 0;
+        transform: translateY(0) rotateX(10deg);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+    90% {
+        opacity: 0.7;
+        transform: translateY(-80vh) rotateX(-5deg);
+    }
+    100% {
+        bottom: 100%;
+        opacity: 0;
+        transform: translateY(-100vh) rotateX(-10deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.button {
+    display: block;
+    width: 200px;
+    margin: 20px 0;  /* Changed from auto to left alignment */
+    padding: 12px 24px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #357abd;
+}
+
+.result-container {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: left;  /* Changed from center to left */
+    display: none;
+}
+
+.result-mild {
+    background-color: #e3f2fd;
+    border: 2px solid #2196f3;
+}
+
+.result-moderate {
+    background-color: #fff3e0;
+    border: 2px solid #ff9800;
+}
+
+.result-severe {
+    background-color: #ffebee;
+    border: 2px solid #f44336;
+}
+
+/* Added to ensure proper clearing after the form */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}    </style>
+</head>
+<body>
+     <div class="welcome-section">
+        <h1>Welcome to Mindful Matches</h1>
+        <h2 class="user-name">Hey, {{naming}}</h2>
+        <p>Let's connect someone mindfuly ;) </p>
+    </div>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Premium</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="ai-companion-container">
+    <div class="ai-chat-window">
+        <div class="ai-header">
+            <h3>Mental Wellness Companion</h3>
+            <button id="toggleChat" class="minimize-btn">−</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+      
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="userInput" placeholder="Type your message...">
+            <button id="sendMessage">Send</button>
+        </div>
+    </div>
+</div>
+   
+
+    <div class="search-box">
+        <div class="match">
+            <span id="tagline">Discover The Love That Lasts Forever (maybe)</span>
+            <input type="text" placeholder="Enter Name">
+            <input type="text" placeholder="Enter Age">
+            <input type="text" placeholder="Enter City">
+            <button type="submit">Analyse</button>
+        </div>
+    </div>
+
+    <div class="services">
+        <div class="features">
+            <span id="head">AI-Based Match Suggestions</span>
+<div class="mhc-test">
+        <div style="font-size: 30px;">Test</div>
+        <form name="mhc-test">
+            <div class="mhc-questions">
+                1. Do you sleep well and regularly? <br/>
+                <div class="mhc-answers">
+                    <input type="radio" class="options" name="dt1" id="dt1" value="-2"> Very rarely <br/>
+                    <input type="radio" class="options" name="dt1" id="dt1" value="-1"> Rarely <br/>
+                    <input type="radio" class="options" name="dt1" id="dt1" value="0"> Sometimes <br/>
+                    <input type="radio" class="options" name="dt1" id="dt1" value="1"> Regularly <br/>
+                    <input type="radio" class="options" name="dt1" id="dt1" value="2"> Very Regularly <br/>
+                </div>
+            </div>
+            <div class="mhc-questions">
+                2. Are you socially drained? <br/>
+                <div class="mhc-answers">
+                    <input type="radio" class="options" name="dt2" id="dt2" value="-2"> Very rarely <br/>
+                    <input type="radio" class="options" name="dt2" id="dt2" value="-1"> Rarely <br/>
+                    <input type="radio" class="options" name="dt2" id="dt2" value="0"> Sometimes <br/>
+                    <input type="radio" class="options" name="dt2" id="dt2" value="1"> Regularly <br/>
+                    <input type="radio" class="options" name="dt2" id="dt2" value="2"> Very Regularly <br/>
+                </div>
+            </div>
+            <div class="mhc-questions">
+                3. How often do you feel hopeless? <br/>
+                <div class="mhc-answers">
+                    <input type="radio" class="options" name="dt3" id="dt3" value="-2"> Very rarely <br/>
+                    <input type="radio" class="options" name="dt3" id="dt3" value="-1"> Rarely <br/>
+                    <input type="radio" class="options" name="dt3" id="dt3" value="0"> Sometimes <br/>
+                    <input type="radio" class="options" name="dt3" id="dt3" value="1"> Regularly <br/>
+                    <input type="radio" class="options" name="dt3" id="dt3" value="2"> Very Regularly <br/>
+                </div>
+            </div>
+            <div class="mhc-questions">
+                4. Losing interest in doing things? <br/>
+                <div class="mhc-answers">
+                    <input type="radio" class="options" name="dt4" id="dt4" value="-2"> Very rarely <br/>
+                    <input type="radio" class="options" name="dt4" id="dt4" value="-1"> Rarely <br/>
+                    <input type="radio" class="options" name="dt4" id="dt4" value="0"> Sometimes <br/>
+                    <input type="radio" class="options" name="dt4" id="dt4" value="1"> Regularly <br/>
+                    <input type="radio" class="options" name="dt4" id="dt4" value="2"> Very Regularly <br/>
+                </div>
+            </div>
+            <div class="mhc-questions">
+                5. Are you socially drained? <br/>
+                <div class="mhc-answers">
+                    <input type="radio" class="options" name="dt5" id="dt5" value="-2"> Very rarely <br/>
+                    <input type="radio" class="options" name="dt5" id="dt5" value="-1"> Rarely <br/>
+                    <input type="radio" class="options" name="dt5" id="dt5" value="0"> Sometimes <br/>
+                    <input type="radio" class="options" name="dt5" id="dt5" value="1"> Regularly <br/>
+                    <input type="radio" class="options" name="dt5" id="dt5" value="2"> Very Regularly <br/>
+                </div>
+            </div>
+            <div class="mhc-questions">
+                6. How often do you lack energy? <br/>
+                <div class="mhc-answers">
+                    <input type="radio" class="options" name="dt6" id="dt6" value="-2"> Very rarely <br/>
+                    <input type="radio" class="options" name="dt6" id="dt6" value="-1"> Rarely <br/>
+                    <input type="radio" class="options" name="dt6" id="dt6" value="0"> Sometimes <br/>
+                    <input type="radio" class="options" name="dt6" id="dt6" value="1"> Regularly <br/>
+                    <input type="radio" class="options" name="dt6" id="dt6" value="2"> Very Regularly <br/>
+                </div>
+            </div>
+            <div class="mhc-questions">
+                7. Do you have eat enough/overeat? <br/>
+                <div class="mhc-answers">
+                    <input type="radio" class="options" name="dt7" id="dt7" value="-2"> Very rarely <br/>
+                    <input type="radio" class="options" name="dt7" id="dt7" value="-1"> Rarely <br/>
+                    <input type="radio" class="options" name="dt7" id="dt7" value="0"> Sometimes <br/>
+                    <input type="radio" class="options" name="dt7" id="dt7" value="1"> Regularly <br/>
+                    <input type="radio" class="options" name="dt7" id="dt7" value="2"> Very Regularly <br/>
+                </div>
+            </div>
+            <div class="mhc-questions">
+                8. Do you blame yourself? <br/>
+                <div class="mhc-answers">
+                    <input type="radio" class="options" name="dt8" id="dt8" value="-2"> Very rarely <br/>
+                    <input type="radio" class="options" name="dt8" id="dt8" value="-1"> Rarely <br/>
+                    <input type="radio" class="options" name="dt8" id="dt8" value="0"> Sometimes <br/>
+                    <input type="radio" class="options" name="dt8" id="dt8" value="1"> Regularly <br/>
+                    <input type="radio" class="options" name="dt8" id="dt8" value="2"> Very Regularly <br/>
+                </div>
+            </div>
+            <div class="mhc-questions">
+                9. Trouble concentrating on a task? <br/>
+                <div class="mhc-answers">
+                    <input type="radio" class="options" name="dt9" id="dt9" value="-2"> Very rarely <br/>
+                    <input type="radio" class="options" name="dt9" id="dt9" value="-1"> Rarely <br/>
+                    <input type="radio" class="options" name="dt9" id="dt9" value="0"> Sometimes <br/>
+                    <input type="radio" class="options" name="dt9" id="dt9" value="1"> Regularly <br/>
+                    <input type="radio" class="options" name="dt9" id="dt9" value="2"> Very Regularly <br/>
+                </div>
+            </div>
+            <div class="mhc-questions">
+                10. Do you suddenly feel nervous? <br/>
+                <div class="mhc-answers">
+                    <input type="radio" class="options" name="dt10" id="dt10" value="-2"> Very rarely <br/>
+                    <input type="radio" class="options" name="dt10" id="dt10" value="-1"> Rarely <br/>
+                    <input type="radio" class="options" name="dt10" id="dt10" value="0"> Sometimes <br/>
+                    <input type="radio" class="options" name="dt10" id="dt10" value="1"> Regularly <br/>
+                    <input type="radio" class="options" name="dt10" id="dt10" value="2"> Very Regularly <br/>
+                </div>
+            </div>
+            <div class="mhc-questions">
+                11. Do you worry too much? <br/>
+                <div class="mhc-answers">
+                    <input type="radio" class="options" name="dt11" id="dt11" value="-2"> Very rarely <br/>
+                    <input type="radio" class="options" name="dt11" id="dt11" value="-1"> Rarely <br/>
+                    <input type="radio" class="options" name="dt11" id="dt11" value="0"> Sometimes <br/>
+                    <input type="radio" class="options" name="dt11" id="dt11" value="1"> Regularly <br/>
+                    <input type="radio" class="options" name="dt11" id="dt11" value="2"> Very Regularly <br/>
+                </div>
+            </div>
+            <div class="mhc-questions">
+                12. Do you have trouble relaxing? <br/>
+                <div class="mhc-answers">
+                    <input type="radio" class="options" name="dt12" id="dt12" value="-2"> Very rarely <br/>
+                    <input type="radio" class="options" name="dt12" id="dt12" value="-1"> Rarely <br/>
+                    <input type="radio" class="options" name="dt12" id="dt12" value="0"> Sometimes <br/>
+                    <input type="radio" class="options" name="dt12" id="dt12" value="1"> Regularly <br/>
+                    <input type="radio" class="options" name="dt12" id="dt12" value="2"> Very Regularly <br/>
+                </div>
+            </div>
+            <br/><br/>
+            <button name="submit" type="submit" id="submit" class="button">Check</button>
+        </form>
+        </div>
+</div>
+        {{!-- <div class="features">
+            <span id="head">Verified Profiles</span>
+            <span>Ensure safety and authenticity through thorough identity verification.</span>
+        </div>
+        <div class="features">
+            <span id="head">Privacy First</span>
+            <span>Advanced privacy options and safety features to protect your personal information.</span>
+        </div> --}}
+    </div>
+
+    {{!-- <div class="affirmation-container">
+    <div class="mood-selector">
+        <label for="moodSelect">How are you feeling today?</label>
+        <select id="moodSelect">
+            <option value="peaceful">Peaceful</option>
+            <option value="excited">Excited</option>
+            <option value="anxious">Anxious</option>
+            <option value="hopeful">Hopeful</option>
+        </select>
+    </div>
+    <div id="cardContainer"></div>
+</div> --}}
+
+    <footer class="footer">
+        <p>&copy; 2025 Mindful Matches. All rights reserved.</p>
+    </footer>
+    <script>
+        const moodAffirmations = {
+    peaceful: [
+        "You attract peaceful and harmonious relationships",
+        "Your calm energy draws the right person to you",
+        "You are worthy of genuine connection",
+        "Your tranquility creates space for love"
+    ],
+    excited: [
+        "Your enthusiasm lights up the room",
+        "The right person will love your energy",
+        "Your joy is magnetic",
+        "Your excitement makes life an adventure"
+    ],
+    anxious: [
+        "Take things one step at a time",
+        "You are safe to be yourself",
+        "The right person will appreciate your authenticity",
+        "It's okay to go at your own pace"
+    ],
+    hopeful: [
+        "Love finds you at the perfect time",
+        "You are attracting meaningful connections",
+        "Your future is bright with possibilities",
+        "Every day brings new opportunities for love"
+    ]
+};
+
+class AffirmationCards {
+    constructor() {
+        this.container = document.getElementById('cardContainer');
+        this.moodSelect = document.getElementById('moodSelect');
+        this.currentMood = 'peaceful';
+        this.activeCards = new Set();
+        
+        this.moodSelect.addEventListener('change', (e) => {
+            this.currentMood = e.target.value;
+        });
+        
+        this.init();
+    }
+    
+    init() {
+        setInterval(() => this.createCard(), 3000);
+    }
+    
+    getRandomAffirmation() {
+        const affirmations = moodAffirmations[this.currentMood];
+        return affirmations[Math.floor(Math.random() * affirmations.length)];
+    }
+    
+    createCard() {
+        const card = document.createElement('div');
+        card.className = 'affirmation-card';
+        
+        const text = document.createElement('p');
+        text.textContent = this.getRandomAffirmation();
+        
+        card.appendChild(text);
+        this.container.appendChild(card);
+        
+        // Add to active cards set
+        this.activeCards.add(card);
+        
+        // Remove card after animation
+        card.addEventListener('animationend', () => {
+            this.container.removeChild(card);
+            this.activeCards.delete(card);
+        });
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[name="mhc-test"]');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        analyzeResponses();
+    });
+    
+    function analyzeResponses() {
+        let totalScore = 0;
+        let answeredQuestions = 0;
+        
+        // Calculate scores for each category
+        const sleepScore = parseInt(getSelectedValue('dt1')) || 0;
+        const socialScore = (parseInt(getSelectedValue('dt2')) + parseInt(getSelectedValue('dt5'))) / 2 || 0;
+        const moodScore = (parseInt(getSelectedValue('dt3')) + parseInt(getSelectedValue('dt4'))) / 2 || 0;
+        const energyScore = parseInt(getSelectedValue('dt6')) || 0;
+        const eatingScore = parseInt(getSelectedValue('dt7')) || 0;
+        const selfBlameScore = parseInt(getSelectedValue('dt8')) || 0;
+        const concentrationScore = parseInt(getSelectedValue('dt9')) || 0;
+        const anxietyScore = (parseInt(getSelectedValue('dt10')) + parseInt(getSelectedValue('dt11')) + 
+                            parseInt(getSelectedValue('dt12'))) / 3 || 0;
+        
+        // Calculate total score
+        totalScore = (sleepScore + socialScore + moodScore + energyScore + 
+                     eatingScore + selfBlameScore + concentrationScore + anxietyScore) / 8;
+        
+        // Generate assessment
+        let assessment = generateAssessment(totalScore, {
+            sleep: sleepScore,
+            social: socialScore,
+            mood: moodScore,
+            energy: energyScore,
+            eating: eatingScore,
+            selfBlame: selfBlameScore,
+            concentration: concentrationScore,
+            anxiety: anxietyScore
+        });
+        
+        displayResults(assessment);
+    }
+    
+    function getSelectedValue(name) {
+        const radio = document.querySelector(`input[name="${name}"]:checked`);
+        return radio ? radio.value : 0;
+    }
+    
+    function generateAssessment(totalScore, categories) {
+        let severity = '';
+        let recommendations = [];
+        
+        // Determine overall severity
+        if (totalScore <= 0) {
+            severity = 'Your responses suggest minimal concerns';
+        } else if (totalScore <= 0.5) {
+            severity = 'Your responses suggest mild concerns';
+        } else if (totalScore <= 1.5) {
+            severity = 'Your responses suggest moderate concerns';
+        } else {
+            severity = 'Your responses suggest significant concerns';
+        }
+        
+        // Generate specific recommendations based on categories
+        if (categories.sleep > 0) {
+            recommendations.push('Consider establishing a regular sleep schedule and bedtime routine');
+        }
+        if (categories.social > 0) {
+            recommendations.push('It might be helpful to balance social interactions with alone time');
+        }
+        if (categories.mood > 1 || categories.selfBlame > 1) {
+            recommendations.push('Speaking with a mental health professional could be beneficial');
+        }
+        if (categories.anxiety > 1) {
+            recommendations.push('Consider learning relaxation techniques or mindfulness practices');
+        }
+        if (categories.concentration > 0) {
+            recommendations.push('Try breaking tasks into smaller, manageable parts');
+        }
+        
+        return {
+            severity: severity,
+            recommendations: recommendations,
+            score: totalScore
+        };
+    }
+    
+    function displayResults(assessment) {
+        // Remove any existing result container
+        const existingResult = document.querySelector('.result-container');
+        if (existingResult) {
+            existingResult.remove();
+        }
+        
+        // Create new result container
+        const resultContainer = document.createElement('div');
+        resultContainer.className = 'result-container';
+        
+        // Add appropriate class based on severity
+        if (assessment.score <= 0.5) {
+            resultContainer.classList.add('result-mild');
+        } else if (assessment.score <= 1.5) {
+            resultContainer.classList.add('result-moderate');
+        } else {
+            resultContainer.classList.add('result-severe');
+        }
+        
+        // Add content
+        let resultHTML = `
+            <h3>${assessment.severity}</h3>
+            <p>Based on your responses, here are some suggestions:</p>
+            <ul>
+                ${assessment.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+            </ul>
+            <p><strong>Note:</strong> This is not a diagnostic tool. If you're experiencing persistent concerns, 
+            please consult with a qualified mental health professional.</p>
+        `;
+        
+        resultContainer.innerHTML = resultHTML;
+        form.appendChild(resultContainer);
+        resultContainer.style.display = 'block';
+    }
+});
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new AffirmationCards();
+});
+// Add this to your JavaScript file
+// LLM API Configuration
+const LLM_BASE_URL = 'http://172.16.18.208:1234';
+const API_ENDPOINTS = {
+    MODELS: '/v1/models',
+    CHAT: '/v1/chat/completions',
+    COMPLETIONS: '/v1/completions'
+};
+
+// Initialize the chat interface
+document.addEventListener('DOMContentLoaded', async function() {
+    const chatWindow = document.querySelector('.ai-companion-container');
+    const toggleButton = document.getElementById('toggleChat');
+    const messageContainer = document.getElementById('chatMessages');
+    const userInput = document.getElementById('userInput');
+    const sendButton = document.getElementById('sendMessage');
+    let currentModel = null;
+    
+    // Add conversation history array to store all messages
+    let conversationHistory = [{
+        role: "system",
+        content: "You are a supportive mental wellness companion on a social-dating platform. Focus on providing emotional support, relationship advice, and promoting healthy dating practices. Do not try to cut somebody off and listen to everything they say while staying ethical."
+    }];
+
+    // Fetch available models on startup
+    async function initializeModels() {
+        try {
+            const response = await fetch(`${LLM_BASE_URL}${API_ENDPOINTS.MODELS}`);
+            const data = await response.json();
+            currentModel = data.data[0]?.id || null;
+            console.log('Using model:', currentModel);
+            
+            // Add initial welcome message and store it in history
+            const welcomeMessage = "Hi! I'm your mental wellness companion. How are you feeling today?";
+            addMessage(welcomeMessage, 'ai');
+            conversationHistory.push({
+                role: "assistant",
+                content: welcomeMessage
+            });
+        } catch (error) {
+            console.error('Error initializing models:', error);
+            addMessage("I'm having trouble connecting to the service. Please try again later.", 'ai');
+        }
+    }
+
+    // Initialize models
+    await initializeModels();
+
+    // Send message to LLM
+    async function sendMessage() {
+        const message = userInput.value.trim();
+        if (!message || !currentModel) return;
+
+        // Add user message to chat and history
+        addMessage(message, 'user');
+        conversationHistory.push({
+            role: "user",
+            content: message
+        });
+        userInput.value = '';
+
+        try {
+            const response = await fetch(`${LLM_BASE_URL}${API_ENDPOINTS.CHAT}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: currentModel,
+                    messages: conversationHistory,  // Send the entire conversation history
+                    temperature: 0.7,
+                    max_tokens: 150
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const aiResponse = data.choices[0]?.message?.content || 'I apologize, but I need a moment to think about that.';
+            
+            // Add AI response to chat and history
+            addMessage(aiResponse, 'ai');
+            conversationHistory.push({
+                role: "assistant",
+                content: aiResponse
+            });
+
+        } catch (error) {
+            console.error('Error:', error);
+            // Fallback to completions endpoint if chat fails
+            try {
+                // Create a prompt that includes recent context
+                const recentMessages = conversationHistory.slice(-3).map(msg => 
+                    `${msg.role}: ${msg.content}`
+                ).join('\n');
+                
+                const completionResponse = await fetch(`${LLM_BASE_URL}${API_ENDPOINTS.COMPLETIONS}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: currentModel,
+                        prompt: `Previous conversation:\n${recentMessages}\nRespond as a mental wellness companion:`,
+                        temperature: 0.7,
+                        max_tokens: 150
+                    })
+                });
+
+                if (!completionResponse.ok) {
+                    throw new Error(`HTTP error! status: ${completionResponse.status}`);
+                }
+
+                const completionData = await completionResponse.json();
+                const completionText = completionData.choices[0]?.text || 'I apologize, but I need a moment to think about that.';
+                
+                // Add completion response to chat and history
+                addMessage(completionText, 'ai');
+                conversationHistory.push({
+                    role: "assistant",
+                    content: completionText
+                });
+
+            } catch (completionError) {
+                console.error('Completion Error:', completionError);
+                addMessage('I apologize, but I seem to be having trouble connecting. Please try again.', 'ai');
+            }
+        }
+    }
+
+    // Add message to chat interface
+    function addMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}-message`;
+        messageDiv.textContent = text;
+        messageContainer.appendChild(messageDiv);
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+
+    // Toggle chat window
+    toggleButton.addEventListener('click', () => {
+        chatWindow.classList.toggle('minimized');
+        toggleButton.textContent = chatWindow.classList.contains('minimized') ? '+' : '−';
+    });
+
+    // Event listeners
+    sendButton.addEventListener('click', sendMessage);
+    userInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+
+    // Error handling for network issues
+    window.addEventListener('offline', () => {
+        addMessage('Network connection lost. Please check your internet connection.', 'ai');
+    });
+
+    window.addEventListener('online', () => {
+        addMessage('Connection restored! You can continue chatting.', 'ai');
+    });
+});
+</script>
+</body>
+</html>
