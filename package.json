@@ -1,0 +1,21 @@
+{
+  "name": "login",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/app.js -e js,hbs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.2",
+    "hbs": "^4.2.0",
+    "mongoose": "^6.13.5",
+    "nodemon": "^2.0.22",
+    "path": "^0.12.7"
+  },
+  "description": ""
+}
